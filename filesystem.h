@@ -77,8 +77,9 @@ public:
     void* read() { return 0; } // Read data (manually specify size)
     template <class data> data* read() { return 0; } // Read data (get size from template)
 };
-#endif
 
+
+#endif
 
 }
 }
