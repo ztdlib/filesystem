@@ -32,8 +32,9 @@
 
 #if __APPLE__ || __unix__
     #include "stdio.h"
-#elif __WIN32
-    #include "stdint.h"
+#elif _WIN32
+    #include <Windows.h>
+    #include <stdint.h>
     // Include for Windows
 #endif
 
@@ -59,7 +60,7 @@ public:
 };
 
 
-#elif __WIN32 // Compile Windows version
+#elif _WIN32 || defined(WIN32)  // Compile Windows version
 class file {
 public:
     void open() {} // Open file
