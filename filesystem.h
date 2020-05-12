@@ -111,6 +111,12 @@ public: // Methods
 
     }
     
+    ~File() {
+        if (!this->m_isFileOpen()) {
+            this->close();
+        }
+    }
+    
     /*
         Creates an empty file, if the file already exist throw an erro (ztd_fserrEXISTS 0x1F)
      */
