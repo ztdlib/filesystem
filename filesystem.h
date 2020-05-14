@@ -53,7 +53,7 @@
     #include <stdint.h>
     #include <unistd.h>
     #include <stdlib.h>
-#elif __WIN32
+#elif _WIN32
     #include <stdio.h>
     #include <stdint.h>
     #include <Windows.h>
@@ -512,7 +512,7 @@ public:
             fclose(m_filePointer);
         }
         else {
-            throw ztd_fserrOPTION;
+            throw ztd_fserrCLOSED;
         }
     } 
 
@@ -533,7 +533,7 @@ public:
            open(ztd_fsREAD);
        }
        else {
-           ztd_fserrOPTION;
+           ztd_fserrNOTEXISTS;
        }
        fseek(this->m_filePointer, 0, SEEK_END);
        size_t fSize = ftell(this->m_filePointer);
@@ -572,14 +572,14 @@ public:
         size.QuadPart = 0;
         HANDLE fh = CreateFile(m_filePath, GENERIC_READ | GENERIC_WRITE, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
         if (fh == INVALID_HANDLE_VALUE) {
-            throw ztd_fserrNOTEXISTS;
+            throw ztd_fserrCLOSED;
             return;
         }
         GetFileSizeEx(fh, &size);
         size.QuadPart = newSize;
         SetFilePointerEx(fh, size, NULL, FILE_BEGIN);
         if (SetEndOfFile(fh) == 0) {
-            throw ztd_fserrOPTION;
+            throw ztd_fserrNOTEXISTS;
             return;
         }
         CloseHandle(fh);
@@ -597,7 +597,7 @@ public:
         size.QuadPart = newSize;
         SetFilePointerEx(fh, size, NULL, FILE_BEGIN);
         if (SetEndOfFile(fh) == 0) {
-            throw ztd_fserrOPTION;
+            throw ztd_fserrNOTEXISTS;
             return;
         }
         CloseHandle(fh);
